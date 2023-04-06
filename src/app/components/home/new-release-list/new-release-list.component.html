@@ -1,0 +1,9 @@
+<div class="flex flex-col space-y-1">
+  <h2 class="text-xl font-semibold text-slate-800">Recently Released</h2>
+  <hr class="pb-5" />
+  <div class="flex flex-col space-y-5">
+    <app-game-item [type]="type" [game]="game" *ngFor="let game of games">
+      {{ game.first_release_date * 1000 | date }}
+    </app-game-item>
+  </div>
+</div>
