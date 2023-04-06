@@ -1,35 +1,37 @@
-<!-- Tiles -->
-<div
-  *ngIf="type === gameType.Tile"
-  class="flex flex-col items-center space-y-3 pb-2 rounded-lg max-w-min"
->
-  <img
-    class="max-h-80 max-w-min rounded-lg"
-    src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{
-      game?.cover?.image_id
-    }}.jpg"
-    [alt]="game?.name"
-  />
-  <h2 class="text-lg font-semibold text-center">
-    {{ game?.name }}
-  </h2>
-</div>
-
-<!-- Panels -->
-<div *ngIf="type === gameType.Panel" class="flex space-x-5">
-  <img
-    class="rounded-lg"
-    src="https://images.igdb.com/igdb/image/upload/t_thumb/{{
-      game?.cover?.image_id
-    }}.jpg"
-    [alt]="game?.name"
-  />
-  <div class="flex flex-col">
-    <span class="text-lg font-medium">
+<a href="game">
+  <!-- Tiles -->
+  <div
+    *ngIf="type === gameType.Tile"
+    class="flex flex-row space-x-5 pb-2 rounded-lg cursor-pointer md:max-w-min md:flex-col md:space-y-3"
+  >
+    <img
+      class="max-h-80 max-w-min rounded-lg"
+      src="https://images.igdb.com/igdb/image/upload/t_cover_big/{{
+        game?.cover?.image_id
+      }}.jpg"
+      [alt]="game?.name"
+    />
+    <h2 class="text-lg font-medium md:text-center">
       {{ game?.name }}
-    </span>
-    <span class="text-sm text-slate-500">
-      <ng-content></ng-content>
-    </span>
+    </h2>
   </div>
-</div>
+
+  <!-- Panels -->
+  <div *ngIf="type === gameType.Panel" class="flex space-x-5 cursor-pointer">
+    <img
+      class="rounded-lg"
+      src="https://images.igdb.com/igdb/image/upload/t_thumb/{{
+        game?.cover?.image_id
+      }}.jpg"
+      [alt]="game?.name"
+    />
+    <div class="flex flex-col">
+      <span class="text-lg font-medium">
+        {{ game?.name }}
+      </span>
+      <span class="text-sm text-slate-500">
+        <ng-content></ng-content>
+      </span>
+    </div>
+  </div>
+</a>

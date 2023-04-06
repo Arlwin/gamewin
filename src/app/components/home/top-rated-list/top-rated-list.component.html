@@ -1,11 +1,11 @@
 <div class="flex flex-col space-y-1">
-  <h2 class="text-2xl font-semibold text-slate-800">
+  <h2 class="text-2xl font-semibold text-slate-800 self-center md:self-auto">
     Top Rated of All Time
   </h2>
   <hr class="pb-4">
 
   <!-- Top Rated List -->
-  <div class="flex space-x-5 justify-between">
+  <div class="flex justify-between flex-col items-stretch md:flex-row md:items-start md:space-x-5">
     <!-- Top Rated Item -->
     <app-game-item [game]="game" *ngFor="let game of games"/>
   </div>

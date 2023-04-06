@@ -1,12 +1,22 @@
-<div class="container mx-auto px-8 py-5">
+<div class="container flex-col mx-auto px-8 py-5 justify-center md:justify-normal">
   <!-- 1st Row -->
-  <div class="flex space-x-5 mb-5 justify-between">
+  <div class="flex space-x-5 mb-7 justify-between flex-col md:flex-row">
     <!-- Heading -->
-    <div class="max-w-xs space-y-3">
+    <div class="flex flex-col max-w-xs space-y-3 mb-5 self-center md:self-auto">
       <h1 class="text-6xl font-bold">Unleash the Gamer Within</h1>
       <h2 class="text-base text-slate-500">
         Start looking for a new game to play now!
       </h2>
+
+      <!-- <span class="flex-grow"></span> -->
+
+      <div class="flex py-5">
+
+        <input class="flex-grow px-2 py-1 rounded-l-lg border-2 border-slate-600 focus:outline-none" type="text">
+        <button class="px-3 py-1 rounded-r-lg border-y-2 border-r-2 border-slate-600 text-slate-600">
+          <span class="font-semibold">Search</span>
+        </button>
+      </div>
     </div>
 
     <!-- Top Rated Container -->
@@ -14,7 +24,7 @@
   </div>
 
   <!-- 2nd Row -->
-  <div class="flex space-x-5 justify-between">
+  <div class="flex flex-col space-y-6 justify-between md:flex-row md:space-y-0 md:space-x-5 ">
 
     <!-- Upcoming -->
     <app-new-release-list />
