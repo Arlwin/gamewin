@@ -1,11 +1,26 @@
 <div class="flex flex-col space-y-1">
-  <h2 class="text-xl font-semibold text-slate-800">Most Popular</h2>
+  <div class="flex justify-between items-baseline">
+    <h2 class="text-xl font-semibold text-slate-800">Most Followers</h2>
+    <a
+      routerLink="/discover"
+      [queryParams]="{ sort: 'follows', desc: 'true' }"
+      class="text-xs"
+    >
+      See More...
+    </a>
+  </div>
   <hr class="pb-5" />
-  <div class="flex flex-col space-y-5">
-    <app-game-item [type]="type" [game]="game" *ngFor="let game of games">
-      {{ game.first_release_date * 1000 | date }}
+  <div *ngIf="games !== null" class="flex flex-col space-y-6">
+    <app-game-item-small [game]="game" *ngFor="let game of games">
+      {{ game.first_release_date! * 1000 | date }}
       <br />
       {{ game.follows }} Followers
-    </app-game-item>
+    </app-game-item-small>
+  </div>
+
+  <div *ngIf="games === null" class="flex flex-col space-y-6">
+    <app-game-item-small />
+    <app-game-item-small />
+    <app-game-item-small />
   </div>
 </div>

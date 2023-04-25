@@ -1,0 +1,219 @@
+<div class="flex gap-24">
+  <!-- Main Col -->
+  <div class="basis-9/12 flex flex-col space-y-3 col-span-6">
+    <!-- Search Bar -->
+    <div class="flex space-x-0 relative mb-3">
+      <span class="material-symbols-outlined opacity-60 absolute top-2 left-3">
+        search
+      </span>
+      <input
+        [(ngModel)]="searchInput"
+        class="flex-grow pl-10 py-1.5 rounded-l-lg border-2 border-slate-700 focus:outline-none"
+        type="text"
+        placeholder="Search"
+        (keyup.enter)="onSearch()"
+      />
+      <button
+        (click)="onSearch()"
+        class="px-3 py-1 rounded-r-lg w-28 border-y-2 border-r-2 border-slate-700 text-slate-700 hover:bg-slate-700 hover:text-white"
+      >
+        <span class="text-lg font-bold">Search</span>
+      </button>
+    </div>
+
+    <!-- Filter Tags -->
+    <div *ngIf="getCheckedGenres().length" class="flex flex-wrap">
+      <div
+        *ngFor="let genre of getCheckedGenres()"
+        class="flex items-center space-x-2 mr-2 mt-1 border-2 border-gray-600 px-2 py-1 rounded-xl"
+      >
+        <span class="text-sm"> {{ genre.name }} </span>
+        <span
+          class="material-symbols-outlined opacity-60 text-sm cursor-pointer"
+          (click)="genre.checked = false"
+        >
+          close
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="getCheckedPlatforms().length" class="flex flex-wrap space-x-2">
+      <div
+        *ngFor="let platform of getCheckedPlatforms()"
+        class="flex items-center space-x-2 border-2 border-gray-600 px-2 py-1 rounded-xl"
+      >
+        <span class="text-sm"> {{ platform.name }} </span>
+        <span
+          class="material-symbols-outlined opacity-60 text-sm cursor-pointer"
+          (click)="platform.checked = false"
+        >
+          close
+        </span>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <span class="text-sm text-slate-500">
+      {{ results.length }}{{ results.length >= 500 ? "+" : "" }} Results Found
+    </span>
+
+    <!-- <span
+      class="text-lg text-slate-500"
+      *ngIf="
+        !results.length &&
+        filters.sort === 'relevance' &&
+        !searchInput &&
+        !searchInput!.trim()
+      "
+    >
+      Search for any keywords
+    </span> -->
+
+    <div class="grid grid-cols-3 gap-6">
+      <app-result-item
+        *ngFor="let result of results"
+        [game]="result"
+        (manageFavorites)="manageFavorites($event)"
+      />
+    </div>
+  </div>
+
+  <!-- Side Col -->
+  <div class="basis-3/12 flex flex-col space-y-3 col-span-2">
+    <!-- Sort By -->
+    <div class="flex flex-col py-4 px-6 space-y-5">
+      <div>
+        <div class="flex justify-between">
+          <h2 class="text-lg font-semibold">Sort By</h2>
+
+          <div
+            class="flex items-center text-xs cursor-pointer"
+            (click)="toggleSort()"
+          >
+            <span class="mr-2">{{
+              filters.descending ? "Descending" : "Ascending"
+            }}</span>
+            <span class="material-symbols-outlined text-md">
+              arrow_{{ filters.descending ? "downward" : "upward" }}
+            </span>
+            <span class="material-symbols-outlined text-md"> sort </span>
+          </div>
+        </div>
+        <hr />
+      </div>
+
+      <div class="flex flex-col px-1 items-stretch space-y-3">
+        <div *ngFor="let sort of sorts; let i = index" class="flex space-x-3">
+          <input
+            type="radio"
+            [id]="i"
+            name="sort"
+            [value]="sort.value.toLowerCase()"
+            [(ngModel)]="filters.sort"
+            (change)="setFilters()"
+          />
+          <label [for]="i" class="text-sm font-md">{{ sort.label }}</label>
+        </div>
+      </div>
+
+      <!-- <div class="flex space-x-2 text-sm px-1">
+        <input
+          type="checkbox"
+          name="showUnreleased"
+          id="showUnreleased"
+          [(ngModel)]="showUnreleased"
+          (change)="toggleUnreleased()"
+        />
+        <label for="showUnreleased">Show Unreleased</label>
+      </div> -->
+    </div>
+
+    <!-- Genres -->
+    <div class="flex flex-col items-stretch h-96 py-4 px-6 space-y-5">
+      <div>
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-semibold">Genre</h2>
+          <span class="text-xs cursor-pointer" (click)="clearAllGenres()">
+            Clear All
+          </span>
+        </div>
+
+        <hr />
+
+        <div class="relative flex mt-2">
+          <input
+            class="border-gray-600 border-2 flex-grow rounded-lg px-8 py-0.5"
+            #searchGenresInput
+            (input)="searchGenres(searchGenresInput.value)"
+          />
+          <span
+            class="material-symbols-outlined text-[16px] opacity-60 absolute top-2 left-3"
+          >
+            search
+          </span>
+        </div>
+      </div>
+
+      <div class="overflow-y-auto flex flex-col px-1 space-y-3 max-h-max">
+        <div
+          *ngFor="let genre of getGenres(); let i = index"
+          class="flex space-x-3"
+        >
+          <input
+            [id]="genre.slug"
+            [name]="genre.slug!"
+            [value]="genre.id"
+            [(ngModel)]="genre.checked"
+            type="checkbox"
+          />
+          <label [for]="genre.slug" class="text-sm">{{ genre.name }}</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platforms -->
+    <div class="flex flex-col h-96 py-4 px-6 space-y-4">
+      <div>
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-semibold">Platform</h2>
+          <span class="text-xs cursor-pointer" (click)="clearAllPlatforms()">
+            Clear All
+          </span>
+        </div>
+
+        <hr />
+
+        <div class="relative flex mt-2">
+          <input
+            class="border-gray-600 border-2 flex-grow rounded-lg px-8 py-0.5"
+            #searchPlatformsInput
+            (input)="searchPlatforms(searchPlatformsInput.value)"
+          />
+          <span
+            class="material-symbols-outlined text-[16px] opacity-60 absolute top-2 left-3"
+          >
+            search
+          </span>
+        </div>
+      </div>
+
+      <div class="overflow-y-auto flex flex-col px-1 space-y-3 max-h-max">
+        <div
+          *ngFor="let platform of getPlatforms(); let i = index"
+          class="flex space-x-3"
+        >
+          <input
+            [id]="platform.slug"
+            [name]="platform.slug!"
+            [value]="platform.id"
+            [(ngModel)]="platform.checked"
+            type="checkbox"
+          />
+          <label [for]="platform.slug" class="text-sm">{{
+            platform.name
+          }}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

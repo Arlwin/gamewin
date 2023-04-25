@@ -19,6 +19,7 @@ export const TOP_RATED_GAMES: Game[] = [
         date: 1670976000,
       },
     ],
+    slug: 'the-witcher-3-wild-hunt-free-next-gen-update',
     total_rating: 100.0,
   },
   {
@@ -35,6 +36,7 @@ export const TOP_RATED_GAMES: Game[] = [
         date: 1656374400,
       },
     ],
+    slug: 'portal-companion-collection',
     total_rating: 100.0,
   },
   {
@@ -55,6 +57,7 @@ export const TOP_RATED_GAMES: Game[] = [
         date: 1630368000,
       },
     ],
+    slug: 'blake-the-visual-novel',
     total_rating: 100.0,
   },
 ];

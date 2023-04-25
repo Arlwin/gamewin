@@ -1,0 +1,106 @@
+<!-- Simulate Loading -->
+<div *ngIf="!game" class="flex flex-col animate-pulse">
+  <!-- 1st Row -->
+  <div class="flex space-x-3 items-center justify-between">
+    <!-- Info -->
+    <div class="flex flex-grow flex-col max-w-lg space-y-24">
+      <div class="flex flex-col w-[100%] space-y-2">
+        <span class="bg-gray-400 mb-3 h-10 rounded-lg"></span>
+        <span class="bg-gray-400 mb-3 h-10 rounded-lg"></span>
+      </div>
+
+      <div class="flex flex-col space-y-2 w-auto">
+        <span class="bg-gray-400 h-3 rounded-lg"></span>
+        <span class="bg-gray-400 w-[80%] h-3 rounded-lg"></span>
+        <span class="bg-gray-400 h-3 rounded-lg"></span>
+        <span class="bg-gray-400 w-[60%] h-3 rounded-lg"></span>
+        <span class="bg-gray-400 w-[40%] h-3 rounded-lg"></span>
+      </div>
+
+      <div class="flex flex-col space-y-4">
+        <div class="flex space-x-3">
+          <span class="px-8 py-4 bg-slate-700 rounded-xl"></span>
+          <span class="px-8 py-4 bg-slate-700 rounded-xl"></span>
+        </div>
+        <div class="flex space-x-3 items-end">
+          <span class="px-8 py-4 bg-slate-500 rounded-xl"></span>
+          <span class="px-8 py-4 bg-slate-500 rounded-xl"></span>
+          <span class="px-8 py-4 bg-slate-500 rounded-xl"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <span
+      class="rounded-lg bg-gray-400 flex items-center justify-center w-[540px] h-[720px]"
+    >
+      <span class="material-symbols-outlined text-7xl"> image </span>
+    </span>
+  </div>
+</div>
+
+<!-- When data is available -->
+<div *ngIf="game" class="flex flex-col">
+  <!-- Go back -->
+  <div class="flex space-x-1 items-center">
+    <span class="material-symbols-outlined"> arrow_back </span>
+    <span
+      class="text-md underline underline-offset-2 cursor-pointer"
+      (click)="goBack()"
+    >
+      Go Back
+    </span>
+  </div>
+  <!-- 1st Row -->
+  <div class="flex space-x-3 items-center justify-between">
+    <!-- Info -->
+    <div class="flex flex-col max-w-lg space-y-9">
+      <span class="text-5xl font-bold max-w-md leading-relaxed mb-3">
+        {{ game.name }}
+      </span>
+      <span class="text-md leading-loose">
+        {{ game.summary }}
+      </span>
+
+      <div class="flex flex-col space-y-7">
+        <div class="flex items-start flex-wrap">
+          <span
+            *ngFor="let genre of game.genres"
+            routerLink="/discover"
+            [queryParams]="{
+              genres: genre.id,
+              sort: 'total_ratings',
+              desc: true
+            }"
+            class="text-sm font-medium text-slate-100 px-4 py-2 mr-3 mt-2 bg-slate-700 rounded-xl cursor-pointer"
+          >
+            {{ genre.name }}
+          </span>
+        </div>
+        <div class="flex items-end flex-wrap">
+          <span
+            *ngFor="let platform of game?.platforms"
+            routerLink="/discover"
+            [queryParams]="{
+              platforms: platform.id,
+              sort: 'total_ratings',
+              desc: true
+            }"
+            class="text-sm font-medium text-slate-100 px-4 py-2 mr-3 mt-2 bg-slate-500 rounded-xl cursor-pointer"
+          >
+            {{ platform.abbreviation ?? platform.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image -->
+    <img
+      src="https://images.igdb.com/igdb/image/upload/t_720p/{{
+        game.cover?.image_id
+      }}.jpg"
+      [alt]="game.name"
+      class="rounded-lg w-[540px] h-[720px]"
+    />
+  </div>
+</div>

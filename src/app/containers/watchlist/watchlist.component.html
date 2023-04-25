@@ -1,0 +1,48 @@
+<h1 class="mb-2 text-2xl font-semibold tracking-wide">Favorites</h1>
+<hr class="mb-6" />
+<div class="grid grid-cols-6 gap-x-14 gap-y-9">
+  <div
+    *ngFor="let favorite of favorites"
+    class="flex flex-col space-y-2 items-center"
+  >
+    <div class="group relative cursor-pointer">
+      <img
+        *ngIf="favorite.cover"
+        class="rounded-lg max-h-[240px] group-hover:brightness-50"
+        src="https://images.igdb.com/igdb/image/upload/t_720p/{{
+          favorite.cover.image_id
+        }}.jpg"
+        [alt]="favorite.name"
+      />
+      <img
+        *ngIf="!favorite.cover"
+        class="rounded-lg max-h-[240px] group-hover:brightness-50"
+        src="/assets/images/no_image.png"
+        [alt]="favorite.name"
+      />
+
+      <!-- Overlay -->
+      <div
+        class="absolute top-0 left-0 h-[100%] w-[100%] text-gray-200 rounded-lg opacity-0 group-hover:opacity-100"
+      >
+        <span class="text-sm absolute top-3 left-3">
+          Remove from<br />
+          Favorites
+        </span>
+        <span
+          class="material-symbols-outlined absolute top-3 right-3"
+          (click)="onClickFavorites(favorite)"
+        >
+          favorite
+        </span>
+      </div>
+    </div>
+
+    <a
+      routerLink="/game/{{ favorite.slug }}"
+      class="text-lg font-semibold tracking-wide text-center"
+    >
+      {{ favorite.name }}
+    </a>
+  </div>
+</div>

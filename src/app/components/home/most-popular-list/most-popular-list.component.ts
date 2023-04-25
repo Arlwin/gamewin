@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { GameItemType } from 'src/app/enums/game-item-type.enum';
+import { Component, Input } from '@angular/core';
 import { Game } from 'src/app/models/game.model';
 import { GameService } from 'src/app/services/game.service';
 
@@ -9,18 +8,5 @@ import { GameService } from 'src/app/services/game.service';
   styleUrls: ['./most-popular-list.component.scss'],
 })
 export class MostPopularListComponent {
-  games: Game[] = [];
-  type = GameItemType.Panel;
-
-  constructor(private gameService: GameService) {}
-
-  ngOnInit() {
-    this.getGames();
-  }
-
-  getGames() {
-    this.gameService
-      .getMostPopularGames()
-      .subscribe((games) => (this.games = games));
-  }
+  @Input() games: Game[] = [];
 }

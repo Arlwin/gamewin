@@ -1,0 +1,40 @@
+<a *ngIf="game" routerLink="/game/{{ game.slug }}">
+  <div class="flex space-x-5">
+    <img
+      *ngIf="game.cover"
+      class="rounded-lg"
+      src="https://images.igdb.com/igdb/image/upload/t_thumb/{{
+        game.cover.image_id
+      }}.jpg"
+      [alt]="game.name"
+    />
+    <img
+      *ngIf="!game.cover"
+      class="rounded-lg max-w-[90px] max-h-[90px] aspect-square"
+      src="/assets/images/no_image.png"
+      [alt]="game.name"
+    />
+    <div class="flex flex-col items-start">
+      <span class="text-md font-semibold">
+        {{ game.name }}
+      </span>
+      <span class="text-sm text-slate-500">
+        <ng-content></ng-content>
+      </span>
+    </div>
+  </div>
+</a>
+
+<div *ngIf="!game" class="flex space-x-5 animate-pulse">
+  <span
+    class="flex justify-center items-center w-[90px] h-[90px] bg-gray-500 rounded-lg"
+  >
+    <span class="material-symbols-outlined text-3xl text-gray-400">
+      image
+    </span>
+  </span>
+  <div class="flex flex-col space-y-3 flex-grow items-stretch">
+    <span class="h-[20px] w-[100%] rounded-lg bg-gray-500"> </span>
+    <span class="h-3 w-[40%] rounded-lg bg-gray-500"> </span>
+  </div>
+</div>

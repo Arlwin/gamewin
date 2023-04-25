@@ -1,12 +1,34 @@
 <div class="flex flex-col space-y-1">
-  <h2 class="text-2xl font-semibold text-slate-800 self-center md:self-auto">
-    Top Rated of All Time
-  </h2>
-  <hr class="pb-4">
+  <div class="flex justify-between items-end">
+    <h2 class="text-2xl font-semibold text-slate-800 self-center md:self-auto">
+      Top Rated of All Time
+    </h2>
+
+    <a
+      routerLink="/discover"
+      [queryParams]="{ sort: 'total_ratings', desc: 'true' }"
+      class="text-xs"
+    >
+      See More...
+    </a>
+  </div>
+
+  <hr class="pb-4" />
 
   <!-- Top Rated List -->
-  <div class="flex justify-between flex-col items-stretch md:flex-row md:items-start md:space-x-5">
-    <!-- Top Rated Item -->
-    <app-game-item [game]="game" *ngFor="let game of games"/>
+  <div
+    *ngIf="games !== null"
+    class="flex justify-between flex-col items-stretch md:flex-row md:items-start md:space-x-5"
+  >
+    <app-game-item-large [game]="game" *ngFor="let game of games" />
+  </div>
+
+  <div
+    *ngIf="games === null"
+    class="flex justify-between flex-col items-stretch md:flex-row md:items-start md:space-x-5 animate-pulse"
+  >
+    <app-game-item-large />
+    <app-game-item-large />
+    <app-game-item-large />
   </div>
 </div>
