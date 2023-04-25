@@ -30,7 +30,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: "dist/"
+          path: "dist/gamewin/"
 
   deploy:
     needs: build
