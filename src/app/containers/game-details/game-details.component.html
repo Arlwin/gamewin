@@ -96,9 +96,16 @@
 
     <!-- Image -->
     <img
+      *ngIf="game.cover"
       src="https://images.igdb.com/igdb/image/upload/t_720p/{{
-        game.cover?.image_id
+        game.cover.image_id
       }}.jpg"
+      [alt]="game.name"
+      class="rounded-lg w-[540px] h-[720px]"
+    />
+    <img
+      *ngIf="!game.cover"
+      src="https://joadre.com/wp-content/uploads/2019/02/no-image.jpg"
       [alt]="game.name"
       class="rounded-lg w-[540px] h-[720px]"
     />
