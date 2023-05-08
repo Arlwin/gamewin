@@ -15,7 +15,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes)], // For Vercel
+  // imports: [RouterModule.forRoot(routes, {useHash: true})], // For GH Pages
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
